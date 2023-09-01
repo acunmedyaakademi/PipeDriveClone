@@ -120,11 +120,11 @@ p, h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-.filter-right-section li {
+.filter-left-section li {
     list-style: none;
 }
 
-.filter-right-section {
+.filter-left-section {
     display: flex;
     padding: 20px;
 }
