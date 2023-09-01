@@ -21,6 +21,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 .project h3{
     padding-top: 10px;
+    font-size: 16px;
 }
 .container{
     display: grid;
@@ -105,9 +106,10 @@ p, h1, h2, h3, h4, h5, h6 {
 
 
 .project {
-    background-color: rgba(206, 206, 206, 0.301);
+    background-color: rgba(119, 119, 119, 0.103);
     width: 96%;
     height: 900px;
+    padding-left: 15px;
 }
 
 .project-add {
@@ -128,7 +130,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .filter-buton {
-    padding: 10px 20px;
+    padding: 5px 15px;
     border: 1px solid rgb(151, 150, 150);
     border-radius: 5px;
     background-color: white;
@@ -139,7 +141,7 @@ p, h1, h2, h3, h4, h5, h6 {
     background-color: green;
     color: white;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
 }
 .nav {
     display:flex;
