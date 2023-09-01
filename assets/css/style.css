@@ -85,7 +85,47 @@ p, h1, h2, h3, h4, h5, h6 {
     z-index: 1;
     visibility: visible;
 }
+.section {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
 
+.project {
+    background-color: rgba(206, 206, 206, 0.301);
+    width: 88%;
+    height: 900px;
+}
+
+.project-add {
+    border: none;
+    font-size: 25px;
+    color: rgb(131, 131, 131);
+    width: 100%;
+    text-align: center;
+}
+
+.filter-right-section li {
+    list-style: none;
+}
+
+.filter-right-section {
+    display: flex;
+}
+
+.filter-buton {
+    padding: 10px 20px;
+    border: 1px solid rgb(151, 150, 150);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.green-buton {
+    margin-left: 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    font-size: 15px;
+}
 
 
 
