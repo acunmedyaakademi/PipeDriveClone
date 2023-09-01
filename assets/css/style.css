@@ -152,9 +152,7 @@ p, h1, h2, h3, h4, h5, h6 {
     
 }
 .left-title h1{
-    font-weight:600;
-    font-size:24px;
-    font-family: "Inter", sans-serif;
+font:600 16px/24px "Inter",sans-serif
 }
 .center-nav{
 display: flex;
@@ -172,7 +170,7 @@ display: flex;
 }
 .searchIcon {
 position: absolute;
-top: 25px;
+top: 18px;
 padding-left: 10px;
 }
 .right-nav {
