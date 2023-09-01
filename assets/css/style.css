@@ -126,6 +126,64 @@ p, h1, h2, h3, h4, h5, h6 {
     border: none;
     font-size: 15px;
 }
+.nav {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    border-bottom-color: hsla(89, 43%, 51%, 0.3);
+    
+}
+.left-title h1{
+    font-weight:600;
+    font-size:24px;
+    font-family: "Inter", sans-serif;
+}
+.center-nav{
+display: flex;
+}
+.center-nav .searchInput {
+    position: relative;
+    border-radius: 30px;
+    width: 300px;
+    height: 40px;
+    padding-left:40px;
+}
+.searchInput::placeholder{
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.searchIcon {
+position: absolute;
+top: 25px;
+padding-left: 10px;
+}
+.right-nav {
+    display: flex;
+}
+.right-nav .right-nav-list{
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+.myApps{
+    background-color: transparent;
+    border:none;
+    cursor: pointer;
 
+}
+.quickHelp{
+    background-color: transparent;
+    border:none;
+    cursor: pointer;
+}
+.salesAssist{
+    background-color: transparent;
+    border:none;
+    cursor: pointer;
+}
+.fa-regular, .fa-solid{
+    font-size:18px ;
+}
 
 
