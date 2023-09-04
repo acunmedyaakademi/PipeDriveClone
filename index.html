@@ -12,34 +12,58 @@
 <body>
     <dialog open class="dialog">
         <form method="post">
-            <label>
-                <h4>İrtibat Kişisi</h4>
-                <input type="text" id="contact-person" name="contact-person" value="">
-            </label>
-            <label>
-                <h4>Kuruluş</h4>
-                <input type="text" id="company" name="company" value="">
-            </label>
-            <label>
-                <h4>Başlık</h4>
-                <input type="text" id="title" name="title" value="">
-            </label>
-            <label>
-                <h4>Değer</h4>
-                <input type="text" id="cost" name="cost" value="">
-            </label>
-            <label>
-                <h4>Değer</h4>
-                <select>
-                    <option value="" disabled selected>Seçiniz</option>                  
-                    <option value="evaluated">Değerlendirilen</option>                  
-                    <option value="communication">İletişim Kuruldu</option>                  
-                    <option value="demo">Demo Planlandı</option>                  
-                    <option value="offer">Teklif Sunuldu</option>
-                    <option value="talks">Görüşmeler Başladı</option>                  
-                </select>
-            </label>         
-
+            <div class="form-header">
+                <h3>Anlaşma Ekle</h3>
+                <button class="reset" type="reset"><i class="fa-solid fa-xmark" style="color: #4e535a;"></i></button>
+            </div>
+            
+            <div class="form-left">
+                <label>
+                    <h4>İrtibat Kişisi</h4>
+                    <input required type="text" id="contact-person" name="contact-person" value="">
+                </label>
+                <label>
+                    <h4>Kuruluş</h4>
+                    <input required type="text" id="company" name="company" value="">
+                </label>
+                <label>
+                    <h4>Başlık</h4>
+                    <input required type="text" id="title" name="title" value="">
+                </label>
+                <label>
+                    <h4>Değer</h4>
+                    <input required type="text" id="cost" name="cost" value="">
+                </label>
+                <label>
+                    <h4>Durum</h4>
+                    <select required>
+                        <option value="" disabled selected>Seçiniz</option>                  
+                        <option value="evaluated">Değerlendirilen</option>                  
+                        <option value="communication">İletişim Kuruldu</option>                  
+                        <option value="demo">Demo Planlandı</option>                  
+                        <option value="offer">Teklif Sunuldu</option>
+                        <option value="talks">Görüşmeler Başladı</option>                  
+                    </select>
+                </label>   
+                <label>
+                    <h4>Tahmini Bitiş Tarihi</h4>
+                    <input required type="date" id="date" name="expected-date" value="">
+                </label>
+            </div>    
+            <div class="form-right">
+                <label>
+                    <h4>Telefon</h4>
+                    <input required type="text" id="phone" name="phone" value="">
+                </label>
+                <label>
+                    <h4>Email</h4>
+                    <input required type="text" id="phone" name="phone" value="">
+                </label>
+            </div>  
+            
+            <div class="form-footer">
+                <button class="filter-buton green-buton" type="submit">Kaydet</button>
+            </div>
         </form>
     </dialog>
     <div class="container">
