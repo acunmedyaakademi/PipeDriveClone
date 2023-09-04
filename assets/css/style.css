@@ -297,3 +297,12 @@ form select {
 .form-header h3 {
     margin: 10px;
 }
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
