@@ -4,6 +4,7 @@
 }
 * {
   margin: 0;
+  padding: 0;
 }
 li,ul {
     list-style: none;
@@ -103,13 +104,11 @@ p, h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
 }
-
-
 .project {
     background-color: rgba(119, 119, 119, 0.103);
     width: 96%;
     height: 900px;
-    padding-left: 15px;
+    padding: 15px;
 }
 
 .project-add {
@@ -202,5 +201,19 @@ padding-left: 10px;
 .fa-regular, .fa-solid{
     font-size:18px ;
 }
-
+.deal {
+    border-radius: 4px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgb(0 0 0/7%),0 1px 2px rgb(0 0 0/6%),0 0 1px rgb(0 0 0/5%);;
+}
+h5 .company{
+    font: 600 16px/21px "Inter",sans-serif;
+}
+.detail {
+    font: 500 14px/21px "Inter",sans-serif;
+}
+#cost {
+    font: 600 12px/16px "Inter",sans-serif;
+}
 
