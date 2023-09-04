@@ -3,6 +3,8 @@ const dialog = document.querySelector('.dialog')
 const projectAddBtns = document.querySelectorAll('.project-add')
 const closeBtn = document.querySelector('.reset');
 const formSubmitBtn = document.querySelector("#add-btn")
+const contactPerson=document.querySelector("#contact-person")
+const company=document.querySelector("#company")
 
 
 async function loadData() {
@@ -62,9 +64,8 @@ async function getForm() {
     formdata.append("stage", "");
     formdata.append("expectedCloseDate", "");
     formdata.append("contactPersonId", "");
-    
     console.log(formdata);
-
+    debugger;
     let requestOptions = {
       method: 'POST',
       body: formdata,
