@@ -1,4 +1,7 @@
-const product = document.querySelector('.product')
+const product = document.querySelector('.product');
+const dialog = document.querySelector('.dialog')
+const projectAddBtns = document.querySelectorAll('.project-add')
+const closeBtn = document.querySelector('.reset')
 
 async function loadData() {
     
@@ -34,5 +37,13 @@ function renderDeals(data) {
 `
 }
 
+projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
+closeBtn.addEventListener('click', closeDialog)
+function addDeal() {
+    dialog.showModal()
+}
+function closeDialog() {
+    dialog.close()
+}
 loadData();
 

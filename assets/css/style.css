@@ -117,6 +117,7 @@ p, h1, h2, h3, h4, h5, h6 {
     color: rgb(131, 131, 131);
     width: 100%;
     text-align: center;
+    cursor: pointer;;
 }
 
 .filter-left-section li {
@@ -213,7 +214,7 @@ h5 .company{
 .detail {
     font: 500 14px/21px "Inter",sans-serif;
 }
-#cost {
+li #cost {
     font: 600 12px/16px "Inter",sans-serif;
 }
 
@@ -235,13 +236,14 @@ h5 .company{
 form {
     margin: auto;
     background-color: rgb(255, 255, 255);
-    max-width: 40%;
+    max-width: 50%;
     display: grid;
     grid-template-areas: 
     "form-header form-header"
     "form-left form-right"
     "form-footer form-footer"
     ;
+    /* padding: 20px; */
 }
 
 .deal-data {
@@ -250,31 +252,48 @@ form {
 
 .form-left {
     grid-area: form-left;
+    border-right: 1px solid gray;
+    padding: 30px;
 }
 
 .form-right {
     grid-area: form-right;
+    padding: 30px;
 }
-
 .form-footer {
     grid-area: form-footer;
     display: flex;
     justify-content: flex-end;
+    border-top: 1px solid gray;
+    padding-top: 10px;
+    background-color: #f5f5f6;
 }
-
 .form-header {
     grid-area: form-header;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid gray;
+    background-color: #f5f5f6;
 }
-
 .reset {
     border: none;
     padding: 10px;
     background-color: transparent;
 }
-
 .reset:hover {
     background-color: rgb(33 35 44/5%);
 }
-
+form h4 {
+    margin-bottom: 4px;
+}
+form input,
+form select {
+    margin-bottom: 10px;
+}
+.form-footer button {
+    margin: 5px;
+}
+.form-header h3 {
+    margin: 10px;
+}
