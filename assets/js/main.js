@@ -15,7 +15,7 @@ async function loadData() {
     for (const cardData of cardsData) {
         
     }
-    const dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals?select=*", requestOptions).then(response => response.text())
+    const dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.text())
     for (const dealData of dealsData) {
         
     }

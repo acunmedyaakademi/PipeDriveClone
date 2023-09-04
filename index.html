@@ -10,6 +10,38 @@
     <script src="assets/js/main.js" defer></script>
 </head>
 <body>
+    <dialog open class="dialog">
+        <form method="post">
+            <label>
+                <h4>İrtibat Kişisi</h4>
+                <input type="text" id="contact-person" name="contact-person" value="">
+            </label>
+            <label>
+                <h4>Kuruluş</h4>
+                <input type="text" id="company" name="company" value="">
+            </label>
+            <label>
+                <h4>Başlık</h4>
+                <input type="text" id="title" name="title" value="">
+            </label>
+            <label>
+                <h4>Değer</h4>
+                <input type="text" id="cost" name="cost" value="">
+            </label>
+            <label>
+                <h4>Değer</h4>
+                <select>
+                    <option value="" disabled selected>Seçiniz</option>                  
+                    <option value="evaluated">Değerlendirilen</option>                  
+                    <option value="communication">İletişim Kuruldu</option>                  
+                    <option value="demo">Demo Planlandı</option>                  
+                    <option value="offer">Teklif Sunuldu</option>
+                    <option value="talks">Görüşmeler Başladı</option>                  
+                </select>
+            </label>         
+
+        </form>
+    </dialog>
     <div class="container">
         <div class="left-nav">
             <ul class="left-nav-ul">
