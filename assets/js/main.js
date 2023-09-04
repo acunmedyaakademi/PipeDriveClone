@@ -65,7 +65,6 @@ async function getForm() {
     formdata.append("expectedCloseDate", "");
     formdata.append("contactPersonId", "");
     console.log(formdata);
-    debugger;
     let requestOptions = {
       method: 'POST',
       body: formdata,
