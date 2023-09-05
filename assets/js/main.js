@@ -1,7 +1,4 @@
-const product = document.querySelector('.product');
 const dialog = document.querySelector('.dialog')
-const projectAddBtns = document.querySelectorAll('.project-add')
-const closeBtn = document.querySelector('.reset');
 const formSubmitBtn = document.querySelector("#add-btn");
 const formContactPerson = document.querySelector("#contact-person");
 const formCompany = document.querySelector("#company");
@@ -10,6 +7,7 @@ const formCost = document.querySelector("#cost")
 const formDate = document.querySelector("#date")
 const formPhone = document.querySelector("#phone");
 const formEmail = document.querySelector("#email");
+const bodySection=document.querySelector(".section")
 let dealsData=[];
 let cardsData=[];
 let contactsData=[];
@@ -28,7 +26,37 @@ async function loadData() {
       redirect: 'follow'
     };
     dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
-    .then(dealsData => {
+
+    cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
+    contactsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/contacts", requestOptions).then(response => response.json())
+    companysData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/companys", requestOptions).then(response => response.json())
+    console.log(cardsData)
+    renderCards()
+};
+
+function renderCards(){
+    let product;
+    cardsData.forEach(cardData=>{
+        bodySection.innerHTML+=`
+        <div class="project qualified" id="${cardData.id}">
+        <h3>${cardData.title}</h3>
+        <p class="project-total">₺<span class="total">0</span></p>
+        <ul class="product"></ul>
+        <button class="project-add">+</button>
+
+        </div>
+        `
+        product = document.querySelector('.product');
+        const projectAddBtns = document.querySelectorAll('.project-add')
+        const closeBtn = document.querySelector('.reset');
+        projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
+        closeBtn.addEventListener('click', closeDialog)
+
+    })
+    renderDeals(product)
+
+}
+function renderDeals(product){
         dealsData.forEach(dealData => {
             product.innerHTML+= `
                 <li class="deal">
@@ -40,23 +68,7 @@ async function loadData() {
                 </li>
                 `
         })
-    
-    })
-    cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
-    contactsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/contacts", requestOptions).then(response => response.json())
-    companysData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/companys", requestOptions).then(response => response.json())
-    console.log(contactsData)
-    console.log(companysData)
-    
-    
-
-   
-    
-
-};
-
-projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
-closeBtn.addEventListener('click', closeDialog)
+}
 function addDeal() {
     dialog.showModal()
 }
