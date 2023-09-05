@@ -62,25 +62,23 @@ async function getForm() {
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     
     let formdata =  new FormData();
+    formdata.append("id", "")
+    formdata.append("contactPersonId", "");
     formdata.append("companyName", "");
     formdata.append("title", "");
     formdata.append("cost", "");
     formdata.append("stage", "");
     formdata.append("expectedCloseDate", "");
-    formdata.append("contactPersonId", "");
     console.log(formdata);
     let requestOptions = {
       method: 'POST',
-      body: formdata,
+      body: "formdata",
       headers: myHeaders,
       redirect: 'follow'
     };
     
     
-    const cardData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions)
-      .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    const cardData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
       console.log(cardData);
 }
 
