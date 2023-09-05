@@ -74,25 +74,22 @@ function renderDeals(product){
 }
 function addDeal() {
     dialog.showModal()
-    formContactPerson.innerHTML=''
+    formContactPerson.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
     contactsData.forEach(contactData => {
         formContactPerson.innerHTML += `
         <option value="${contactData.id}">${contactData.firstName} ${contactData.lastName}</option>
-    `
+        `
     })
-
     formContactPerson.addEventListener("change", () => {
-        debugger;
-        const findPhone = contactsData.find(person => person.id===formContactPerson.id)
-        console.log(findPhone);
+        const findPhone = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
+        formPhone.value=findPhone.phone
+        formEmail.value=findPhone.email
     })
-
-
     cardStage.innerHTML=""
     cardsData.forEach(cardData => {
         cardStage.innerHTML += `
         <option value="${cardData.id}">${cardData.title}</option>
-    `
+        `
     })
 }
 function closeDialog() {
