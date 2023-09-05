@@ -21,7 +21,9 @@
             <div class="form-left">
                 <label>
                     <h4>İrtibat Kişisi</h4>
-                    <input required type="text" id="contact-person" name="contact-person" value="">
+                    <select id="contact-person">
+                        
+                    </select>
                 </label>
                 <label>
                     <h4>Kuruluş</h4>
@@ -37,14 +39,14 @@
                 </label>
                 <label>
                     <h4>Durum</h4>
-                    <!-- <select required>
-                        <option value="" disabled selected>Seçiniz</option>                  
+                    <select required>
+                        <!-- <option value="" disabled selected>Seçiniz</option>                  
                         <option value="evaluated">Değerlendirilen</option>                  
                         <option value="communication">İletişim Kuruldu</option>                  
                         <option value="demo">Demo Planlandı</option>                  
                         <option value="offer">Teklif Sunuldu</option>
-                        <option value="talks">Görüşmeler Başladı</option>                  
-                    </select> -->
+                        <option value="talks">Görüşmeler Başladı</option>                   -->
+                    </select>
                 </label>   
                 <label>
                     <h4>Tahmini Bitiş Tarihi</h4>
@@ -63,7 +65,7 @@
             </div>  
             
             <div class="form-footer">
-                <button class="filter-buton green-buton" id="add-btn" type="submit">Kaydet</button>
+                <button class="filter-buton green-buton" id="add-btn" type="button">Kaydet</button>
             </div>
         </form>
     </dialog>

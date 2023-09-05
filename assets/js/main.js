@@ -10,7 +10,11 @@ const formCost = document.querySelector("#cost")
 const formDate = document.querySelector("#date")
 const formPhone = document.querySelector("#phone");
 const formEmail = document.querySelector("#email");
-const section = document.querySelector('.section')
+let dealsData=[];
+let cardsData=[];
+let contactsData=[];
+let companysData=[];
+
 
 async function loadData() {
     
@@ -23,7 +27,7 @@ async function loadData() {
       headers: myHeaders,
       redirect: 'follow'
     };
-    const dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
+    dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
     .then(dealsData => {
         dealsData.forEach(dealData => {
             product.innerHTML+= `
@@ -36,14 +40,16 @@ async function loadData() {
                 </li>
                 `
         })
+    
     })
+    cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
+    contactsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/contacts", requestOptions).then(response => response.json())
+    companysData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/companys", requestOptions).then(response => response.json())
+    console.log(contactsData)
+    console.log(companysData)
     
     
 
-    // const cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
-    // for (const cardData of cardsData) {
-        
-    // }
    
     
 
@@ -58,17 +64,16 @@ function closeDialog() {
     dialog.close()
 }
 
-formSubmitBtn.addEventListener("submit", getForm)
+formSubmitBtn.addEventListener("click", getForm)
 
-async function getForm(e) {
-    e.preventDefault()
+async function getForm() {
     var myHeaders = new Headers();
     myHeaders.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Content-Type", "application/json");
     
     var raw = JSON.stringify({
-      "contactPersonId": 1,
+      "contactPersonId": 10,
       "companyName": "comp",
       "title": "tit",
       "cost": 10000,
@@ -76,6 +81,8 @@ async function getForm(e) {
       "expectedCloseDate": "2023-12-11"
     });
     
+    console.log(raw);
+
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
