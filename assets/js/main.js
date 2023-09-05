@@ -9,7 +9,8 @@ const formTitle = document.querySelector("#title");
 const formCost = document.querySelector("#cost")
 const formDate = document.querySelector("#date")
 const formPhone = document.querySelector("#phone");
-const formEmail = document.querySelector("#email")
+const formEmail = document.querySelector("#email");
+const section = document.querySelector('.section')
 
 async function loadData() {
     
@@ -22,28 +23,31 @@ async function loadData() {
       headers: myHeaders,
       redirect: 'follow'
     };
-    const cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
-    for (const cardData of cardsData) {
+    const dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
+    .then(dealsData => {
+        dealsData.forEach(dealData => {
+            product.innerHTML+= `
+                <li class="deal">
+                    <h4><span class="${dealData.title}">${dealData.title}</span> anlaşması</h4>
+                    <div class="detail">
+                        <span class="${dealData.companyName}">${dealData.title}</span>,<span id="contact">${dealData.contactPersonId}</span>
+                    </div>
+                    <span id="cost">₺5</span>
+                </li>
+                `
+        })
+    })
+    
+    
+
+    // const cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
+    // for (const cardData of cardsData) {
         
-    }
-    const dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.text())
-    for (const dealData of dealsData) {
-        
-    }
-    renderDeals();
+    // }
+   
+    
 
 };
-function renderDeals(data) {
-    product.innerHTML+= `
-    <li class="deal">
-        <h4><span class="company">bilmem ne</span> anlaşması</h4>
-        <div class="detail">
-            <span class="company">bilmem ne</span>,<span id="contact">furkan</span>
-        </div>
-        <span id="cost">₺5</span>
-    </li>
-    `
-}
 
 projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
 closeBtn.addEventListener('click', closeDialog)
@@ -54,32 +58,30 @@ function closeDialog() {
     dialog.close()
 }
 
-formSubmitBtn.addEventListener("click", getForm)
+formSubmitBtn.addEventListener("submit", getForm)
 
-async function getForm() {
-    let myHeaders = new Headers();
+async function getForm(e) {
+    e.preventDefault()
+    var myHeaders = new Headers();
     myHeaders.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
+    myHeaders.append("Content-Type", "application/json");
     
-    let formdata =  new FormData();
-    formdata.append("id", "")
-    formdata.append("contactPersonId", "");
-    formdata.append("companyName", "");
-    formdata.append("title", "");
-    formdata.append("cost", "");
-    formdata.append("stage", "");
-    formdata.append("expectedCloseDate", "");
-    console.log(formdata);
-    let requestOptions = {
+    var raw = JSON.stringify({
+      "contactPersonId": 1,
+      "companyName": "comp",
+      "title": "tit",
+      "cost": 10000,
+      "stage": 1,
+      "expectedCloseDate": "2023-12-11"
+    });
+    
+    var requestOptions = {
       method: 'POST',
-      body: "formdata",
       headers: myHeaders,
+      body: raw,
       redirect: 'follow'
     };
-    
-    
-    const cardData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
-      console.log(cardData);
 }
 
 loadData();
