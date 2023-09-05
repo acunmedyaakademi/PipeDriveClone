@@ -12,7 +12,7 @@
 </head>
 <body>
     <dialog class="dialog">
-        <form method="post">
+        <form method="post" autocomplete="off">
             <div class="form-header">
                 <h3>Anlaşma Ekle</h3>
                 <button class="reset" type="reset"><i class="fa-solid fa-xmark" style="color: #4e535a;"></i></button>
@@ -22,7 +22,7 @@
                 <label>
                     <h4>İrtibat Kişisi</h4>
                     <select id="contact-person">
-                        
+                        <option value="" disabled selected>Seçiniz</option> 
                     </select>
                 </label>
                 <label>
@@ -39,13 +39,8 @@
                 </label>
                 <label>
                     <h4>Durum</h4>
-                    <select required>
-                        <!-- <option value="" disabled selected>Seçiniz</option>                  
-                        <option value="evaluated">Değerlendirilen</option>                  
-                        <option value="communication">İletişim Kuruldu</option>                  
-                        <option value="demo">Demo Planlandı</option>                  
-                        <option value="offer">Teklif Sunuldu</option>
-                        <option value="talks">Görüşmeler Başladı</option>                   -->
+                    <select required id="card-stage">
+                        <option value="" disabled selected>Seçiniz</option>                  
                     </select>
                 </label>   
                 <label>

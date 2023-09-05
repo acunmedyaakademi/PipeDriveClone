@@ -7,7 +7,8 @@ const formCost = document.querySelector("#cost")
 const formDate = document.querySelector("#date")
 const formPhone = document.querySelector("#phone");
 const formEmail = document.querySelector("#email");
-const bodySection=document.querySelector(".section")
+const bodySection=document.querySelector(".section");
+const cardStage = document.querySelector("#card-stage")
 let dealsData=[];
 let cardsData=[];
 let contactsData=[];
@@ -56,24 +57,47 @@ function renderCards(){
     renderDeals(product)
 
 }
+
+
 function renderDeals(product){
         dealsData.forEach(dealData => {
             product.innerHTML+= `
                 <li class="deal">
                     <h4><span class="${dealData.title}">${dealData.title}</span> anlaşması</h4>
                     <div class="detail">
-                        <span class="${dealData.companyName}">${dealData.title}</span>,<span id="contact">${dealData.contactPersonId}</span>
+                        <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}">${dealData.contactPersonId}</span>
                     </div>
-                    <span id="cost">₺5</span>
+                    <span id="${dealData.cost}">₺${dealData.cost}</span>
                 </li>
                 `
         })
 }
 function addDeal() {
     dialog.showModal()
+    formContactPerson.innerHTML=''
+    contactsData.forEach(contactData => {
+        formContactPerson.innerHTML += `
+        <option value="${contactData.id}">${contactData.firstName} ${contactData.lastName}</option>
+    `
+    })
+
+    formContactPerson.addEventListener("change", () => {
+        debugger;
+        const findPhone = contactsData.find(person => person.id===formContactPerson.id)
+        console.log(findPhone);
+    })
+
+
+    cardStage.innerHTML=""
+    cardsData.forEach(cardData => {
+        cardStage.innerHTML += `
+        <option value="${cardData.id}">${cardData.title}</option>
+    `
+    })
 }
 function closeDialog() {
-    dialog.close()
+    dialog.close();
+    
 }
 
 formSubmitBtn.addEventListener("click", getForm)

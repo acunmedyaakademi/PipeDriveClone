@@ -293,6 +293,7 @@ form h4 {
 form input,
 form select {
     margin-bottom: 10px;
+    outline: none;
 }
 .form-footer button {
     margin: 5px;
