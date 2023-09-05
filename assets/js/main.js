@@ -2,8 +2,14 @@ const product = document.querySelector('.product');
 const dialog = document.querySelector('.dialog')
 const projectAddBtns = document.querySelectorAll('.project-add')
 const closeBtn = document.querySelector('.reset');
-const formSubmitBtn = document.querySelector("#add-btn")
-
+const formSubmitBtn = document.querySelector("#add-btn");
+const formContactPerson = document.querySelector("#contact-person");
+const formCompany = document.querySelector("#company");
+const formTitle = document.querySelector("#title");
+const formCost = document.querySelector("#cost")
+const formDate = document.querySelector("#date")
+const formPhone = document.querySelector("#phone");
+const formEmail = document.querySelector("#email")
 
 async function loadData() {
     
