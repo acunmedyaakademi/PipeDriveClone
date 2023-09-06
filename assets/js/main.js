@@ -85,7 +85,7 @@ function addDeal() {
         formPhone.value=findPhone.phone
         formEmail.value=findPhone.email
     })
-    cardStage.innerHTML=""
+    cardStage.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
     cardsData.forEach(cardData => {
         cardStage.innerHTML += `
         <option value="${cardData.id}">${cardData.title}</option>
