@@ -33,9 +33,9 @@ async function loadData() {
     companysData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/companys", requestOptions).then(response => response.json())
     renderCards()
 };
-
+let product;
 function renderCards(){
-    let product;
+    
     cardsData.forEach(cardData=>{
         bodySection.innerHTML+=`
         <div class="project qualified" id="${cardData.id}">
@@ -43,20 +43,15 @@ function renderCards(){
         <p class="project-total">₺<span class="total">0</span></p>
         <ul class="product"></ul>
         <button class="project-add">+</button>
-
-        </div>
-        `
+        </div>`
         product = document.querySelector('.product');
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
         projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
         closeBtn.addEventListener('click', closeDialog)
-
     })
     renderDeals(product)
-
 }
-
 
 function renderDeals(product){
         dealsData.forEach(dealData => {
@@ -83,12 +78,16 @@ function addDeal() {
     })
     formContactPerson.addEventListener("change", () => {
         finded = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
-        findedCompanys=companysData.find(companyData=> companyData.contactId===parseInt(formContactPerson.value))
-        formCompany.innerHTML+=`<option value="${findedCompanys.id}">${findedCompanys.name}</option>`
-
+        findedCompanys=companysData.filter(companyData=> companyData.contactId===parseInt(formContactPerson.value))
+        findedCompanys.forEach(find => {
+            formCompany.innerHTML+=`<option id="${find.id}" value="${find.name}">${find.name}</option>`
+        })
         formPhone.value=finded.phone
         formEmail.value=finded.email
-        
+        formCompany.addEventListener("change", () => {
+            formTitle.value=formCompany.value+ " anlaşması"
+
+        })
     })
     cardStage.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
     cardsData.forEach(cardData => {
@@ -96,11 +95,9 @@ function addDeal() {
         <option value="${cardData.id}">${cardData.title}</option>
         `
     })
-    
 }
 function closeDialog() {
     dialog.close();
-    
 }
 
 formSubmitBtn.addEventListener("click", getForm)
@@ -110,25 +107,33 @@ async function getForm() {
     myHeaders.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Content-Type", "application/json");
-    
-    var raw = JSON.stringify({
-      "contactPersonId": 10,
-      "companyName": "comp",
-      "title": "tit",
-      "cost": 10000,
-      "stage": 1,
-      "expectedCloseDate": "2023-12-11"
-    });
-    
+    var raw ={
+      "contactPersonId": formContactPerson.value,
+      "companyName": formCompany.value,
+      "title": formTitle.value,
+      "cost": formCost.value,
+      "stage": cardStage.value,
+      "expectedCloseDate": formDate.value
+    };
     console.log(raw);
-
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
+      body:  JSON.stringify(raw),
     };
+    fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(result => result.json())
+        .then(raw => {
+            product.innerHTML+= `
+                <li class="deal">
+                    <h4><span class="${raw.title}">${raw.title}</span> anlaşması</h4>
+                    <div class="detail">
+                        <span class="${raw.companyId}">${raw.title}</span>,<span id="contact ${raw.contactPersonId}">${raw.contactPersonId}</span>
+                    </div>
+                    <span id="${raw.cost}">₺${raw.cost}</span>
+                </li>
+                `
+        })
+       
 }
-
 loadData();
 
