@@ -31,7 +31,6 @@ async function loadData() {
     cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
     contactsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/contacts", requestOptions).then(response => response.json())
     companysData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/companys", requestOptions).then(response => response.json())
-    console.log(cardsData)
     renderCards()
 };
 
@@ -74,6 +73,8 @@ function renderDeals(product){
 }
 function addDeal() {
     dialog.showModal()
+    let finded;
+    let findedCompanys;
     formContactPerson.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
     contactsData.forEach(contactData => {
         formContactPerson.innerHTML += `
@@ -81,9 +82,13 @@ function addDeal() {
         `
     })
     formContactPerson.addEventListener("change", () => {
-        const findPhone = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
-        formPhone.value=findPhone.phone
-        formEmail.value=findPhone.email
+        finded = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
+        findedCompanys=companysData.find(companyData=> companyData.contactId===parseInt(formContactPerson.value))
+        formCompany.innerHTML+=`<option value="${findedCompanys.id}">${findedCompanys.name}</option>`
+
+        formPhone.value=finded.phone
+        formEmail.value=finded.email
+        
     })
     cardStage.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
     cardsData.forEach(cardData => {
@@ -91,6 +96,7 @@ function addDeal() {
         <option value="${cardData.id}">${cardData.title}</option>
         `
     })
+    
 }
 function closeDialog() {
     dialog.close();
