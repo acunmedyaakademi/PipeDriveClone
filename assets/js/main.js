@@ -8,7 +8,7 @@ const formDate = document.querySelector("#date")
 const formPhone = document.querySelector("#phone");
 const formEmail = document.querySelector("#email");
 const bodySection=document.querySelector(".section");
-const cardStage = document.querySelector("#card-stage")
+const cardStage = document.querySelector("#card-stage");
 let dealsData=[];
 let cardsData=[];
 let contactsData=[];
@@ -27,26 +27,29 @@ async function loadData() {
       redirect: 'follow'
     };
     dealsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(response => response.json())
-
     cardsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/cards", requestOptions).then(response => response.json())
     contactsData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/contacts", requestOptions).then(response => response.json())
     companysData = await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/companys", requestOptions).then(response => response.json())
     renderCards()
 };
 let product;
+let cardTotal;
+let total = 0;
+
 function renderCards(){
     
     cardsData.forEach(cardData=>{
         bodySection.innerHTML+=`
         <div class="project qualified" id="${cardData.id}">
         <h3>${cardData.title}</h3>
-        <p class="project-total">₺<span class="total">0</span></p>
+        <p class="project-total">₺<span class="total">${total}</span></p>
         <ul class="product"></ul>
         <button class="project-add">+</button>
         </div>`
         product = document.querySelector('.product');
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
+        cardTotal = document.querySelector(".total");
         projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
         closeBtn.addEventListener('click', closeDialog)
     })
@@ -65,6 +68,7 @@ function renderDeals(product){
                 </li>
                 `
         })
+        
 }
 function addDeal() {
     dialog.showModal()
@@ -80,12 +84,12 @@ function addDeal() {
         finded = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
         findedCompanys=companysData.filter(companyData=> companyData.contactId===parseInt(formContactPerson.value))
         findedCompanys.forEach(find => {
-            formCompany.innerHTML+=`<option id="${find.id}" value="${find.name}">${find.name}</option>`
+            formCompany.innerHTML+=`<option id="${find.name}" value="${find.id}">${find.name}</option>`
         })
         formPhone.value=finded.phone
         formEmail.value=finded.email
-        formCompany.addEventListener("change", () => {
-            formTitle.value=formCompany.value+ " anlaşması"
+        formCompany.addEventListener("change", (e) => {
+            formTitle.value=e.target.querySelector(`option[value='${formCompany.value}']`).innerText + " anlaşması"
 
         })
     })
@@ -103,25 +107,25 @@ function closeDialog() {
 formSubmitBtn.addEventListener("click", getForm)
 
 async function getForm() {
-    var myHeaders = new Headers();
+    let myHeaders = new Headers();
     myHeaders.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Content-Type", "application/json");
-    var raw ={
-      "contactPersonId": formContactPerson.value,
-      "companyName": formCompany.value,
-      "title": formTitle.value,
-      "cost": formCost.value,
-      "stage": cardStage.value,
-      "expectedCloseDate": formDate.value
+    let raw = {
+      contactPersonId: formContactPerson.value,
+      companyId: formCompany.value,
+      title: formTitle.value,
+      cost: formCost.value,
+      stage: cardStage.value,
+      expectedCloseDate: formDate.value
     };
-    console.log(raw);
-    var requestOptions = {
+    let requestOptionsPost = {
       method: 'POST',
       headers: myHeaders,
-      body:  JSON.stringify(raw),
+      body:  JSON.stringify(raw)
     };
-    fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptions).then(result => result.json())
+
+    await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptionsPost).then(result => result.json())
         .then(raw => {
             product.innerHTML+= `
                 <li class="deal">
@@ -129,11 +133,14 @@ async function getForm() {
                     <div class="detail">
                         <span class="${raw.companyId}">${raw.title}</span>,<span id="contact ${raw.contactPersonId}">${raw.contactPersonId}</span>
                     </div>
-                    <span id="${raw.cost}">₺${raw.cost}</span>
+                    <span id="${raw.cost} total">₺${raw.cost}</span>
                 </li>
                 `
         })
-       
+
 }
+
+
+
 loadData();
 
