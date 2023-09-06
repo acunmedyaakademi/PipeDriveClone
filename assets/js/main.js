@@ -67,6 +67,9 @@ function renderDeals(product){
                     <span id="${dealData.cost}">₺${dealData.cost}</span>
                 </li>
                 `
+                total += dealData.cost;
+                cardTotal.innerText = total;
+                
         })
         
 }
@@ -136,7 +139,13 @@ async function getForm() {
                     <span id="${raw.cost} total">₺${raw.cost}</span>
                 </li>
                 `
+                rawTotal = document.querySelector("#total").innerText
+                insertDeals()
         })
+
+}
+
+function insertDeals() {
 
 }
 
