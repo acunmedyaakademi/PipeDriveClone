@@ -14,13 +14,13 @@ let cardsData=[];
 let contactsData=[];
 let companysData=[];
 
+const authorizationKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs"
+
 
 async function loadData() {
-    
     let myHeaders = new Headers();
     myHeaders.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
-
     let requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -84,9 +84,11 @@ function addDeal() {
         `
     })
     formContactPerson.addEventListener("change", () => {
+        formCompany.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
         finded = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
         findedCompanys=companysData.filter(companyData=> companyData.contactId===parseInt(formContactPerson.value))
         findedCompanys.forEach(find => {
+            
             formCompany.innerHTML+=`<option id="${find.name}" value="${find.id}">${find.name}</option>`
         })
         formPhone.value=finded.phone
@@ -110,44 +112,31 @@ function closeDialog() {
 formSubmitBtn.addEventListener("click", getForm)
 
 async function getForm() {
-    let myHeaders = new Headers();
-    myHeaders.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs");
-    myHeaders.append("Content-Type", "application/json");
-    let raw = {
-      contactPersonId: formContactPerson.value,
-      companyId: formCompany.value,
-      title: formTitle.value,
-      cost: formCost.value,
-      stage: cardStage.value,
-      expectedCloseDate: formDate.value
-    };
-    let requestOptionsPost = {
-      method: 'POST',
-      headers: myHeaders,
-      body:  JSON.stringify(raw)
-    };
-
-    await fetch("https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals", requestOptionsPost).then(result => result.json())
-        .then(raw => {
-            product.innerHTML+= `
-                <li class="deal">
-                    <h4><span class="${raw.title}">${raw.title}</span> anlaşması</h4>
-                    <div class="detail">
-                        <span class="${raw.companyId}">${raw.title}</span>,<span id="contact ${raw.contactPersonId}">${raw.contactPersonId}</span>
-                    </div>
-                    <span id="${raw.cost} total">₺${raw.cost}</span>
-                </li>
-                `
-                rawTotal = document.querySelector("#total").innerText
-                insertDeals()
+    const response = await fetch('https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals', {
+            method: 'POST',
+            body: JSON.stringify({
+                obje: {
+                    contactPersonId: formContactPerson.value,
+                    companyId: formCompany.value,
+                    title: formTitle.value,
+                    cost: formCost.value,
+                    stage: cardStage.value,
+                    expectedCloseDate: formDate.value
+                  }
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authorizationKey}`,
+                'ApiKey': authorizationKey,
+            },
         })
+    console.log(response);
+    renderDeals();
+    closeDialog();
 
 }
 
-function insertDeals() {
 
-}
 
 
 
