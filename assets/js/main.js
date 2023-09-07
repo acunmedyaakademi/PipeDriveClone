@@ -36,8 +36,9 @@ let product;
 let cardTotal;
 let total = 0;
 
+
 function renderCards(){
-    
+    bodySection.innerHTML= ""
     cardsData.forEach(cardData=>{
         bodySection.innerHTML+=`
         <div class="project qualified" id="${cardData.id}">
@@ -53,9 +54,9 @@ function renderCards(){
         projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
         closeBtn.addEventListener('click', closeDialog)
     })
+
     renderDeals(product)
 }
-
 function renderDeals(product){
         dealsData.forEach(dealData => {
             product.innerHTML+= `
@@ -114,8 +115,7 @@ formSubmitBtn.addEventListener("click", getForm)
 async function getForm() {
     const response = await fetch('https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals', {
             method: 'POST',
-            body: JSON.stringify({
-                obje: {
+            body: JSON.stringify( {
                     contactPersonId: formContactPerson.value,
                     companyId: formCompany.value,
                     title: formTitle.value,
@@ -123,7 +123,7 @@ async function getForm() {
                     stage: cardStage.value,
                     expectedCloseDate: formDate.value
                   }
-            }),
+            ),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authorizationKey}`,
@@ -131,14 +131,9 @@ async function getForm() {
             },
         })
     console.log(response);
-    renderDeals();
+    renderCards();
     closeDialog();
-
 }
-
-
-
-
 
 loadData();
 
