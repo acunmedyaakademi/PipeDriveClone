@@ -9,13 +9,13 @@ const formPhone = document.querySelector("#phone");
 const formEmail = document.querySelector("#email");
 const bodySection=document.querySelector(".section");
 const cardStage = document.querySelector("#card-stage");
+const cardProject = document.querySelectorAll('.project');
 let dealsData=[];
 let cardsData=[];
 let contactsData=[];
 let companysData=[];
 
 const authorizationKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdueHlrYW53bHB4YWpjdnJreWNoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MzQxMzgzOCwiZXhwIjoyMDA4OTg5ODM4fQ.5ovwvbi5g2eTaK8R2KauWEhw5hPJ8aQsieXA7RYKjXs"
-
 
 async function loadData() {
     let myHeaders = new Headers();
@@ -36,7 +36,6 @@ let product;
 let cardTotal;
 let total = 0;
 
-
 function renderCards(){
     bodySection.innerHTML= ""
     cardsData.forEach(cardData=>{
@@ -54,22 +53,26 @@ function renderCards(){
         projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
         closeBtn.addEventListener('click', closeDialog)
     })
-
     renderDeals(product)
 }
 function renderDeals(product){
+        
         dealsData.forEach(dealData => {
+            let findedPerson =contactsData.find(person => person.id === dealData.contactPersonId)
+            console.log(cardStage.id);
+            console.log(findedPerson);
             product.innerHTML+= `
-                <li class="deal">
-                    <h4><span class="${dealData.title}">${dealData.title}</span> anlaşması</h4>
+                <li class="deal" id="${cardStage.value}">
+                    <h4><span class="${dealData.title}">${dealData.title}</span></h4>
                     <div class="detail">
-                        <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}">${dealData.contactPersonId}</span>
+                        <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
                     </div>
                     <span id="${dealData.cost}">₺${dealData.cost}</span>
                 </li>
                 `
-                total += dealData.cost;
-                cardTotal.innerText = total;
+                // total += dealData.cost;
+                // cardTotal.innerText = total;
+                filterCards()
                 
         })
         
@@ -131,8 +134,13 @@ async function getForm() {
             },
         })
     console.log(response);
+
     renderCards();
     closeDialog();
+}
+
+function filterCards() {
+    cardsData
 }
 
 loadData();
