@@ -35,48 +35,41 @@ async function loadData() {
 let product;
 let cardTotal;
 let total = 0;
-
 function renderCards(){
     bodySection.innerHTML= ""
     cardsData.forEach(cardData=>{
         bodySection.innerHTML+=`
-        <div class="project qualified" id="${cardData.id}">
-        <h3>${cardData.title}</h3>
-        <p class="project-total">₺<span class="total">${total}</span></p>
-        <ul class="product"></ul>
-        <button class="project-add">+</button>
-        </div>`
-        product = document.querySelector('.product');
+            <div class="project qualified" id="${cardData.id}">
+                <h3>${cardData.title}</h3>
+                <p class="project-total">₺<span class="total">${total}</span></p>
+                <ul class="product" id="${cardData.id}"></ul>
+                <button class="project-add">+</button>
+            </div>`
+        product = document.querySelector(`ul[id="${cardData.id}"]`);
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
         cardTotal = document.querySelector(".total");
         projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
         closeBtn.addEventListener('click', closeDialog)
+        dealsData.forEach(dealData=> {
+            if(dealData.stage=== cardData.id) {
+                let findedPerson =contactsData.find(person => person.id === dealData.contactPersonId)
+                product.innerHTML+= `
+                    <li class="deal" id="${dealData.stage}">
+                        <h4><span class="${dealData.title}">${dealData.title}</span></h4>
+                        <div class="detail">
+                            <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
+                        </div>
+                        <span id="${dealData.cost}">₺${dealData.cost}</span>
+                    </li>
+                    `
+            }
+                return false;
+            });
     })
-    renderDeals(product)
 }
-function renderDeals(product){
-        
-        dealsData.forEach(dealData => {
-            let findedPerson =contactsData.find(person => person.id === dealData.contactPersonId)
-            console.log(cardStage.id);
-            console.log(findedPerson);
-            product.innerHTML+= `
-                <li class="deal" id="${cardStage.value}">
-                    <h4><span class="${dealData.title}">${dealData.title}</span></h4>
-                    <div class="detail">
-                        <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
-                    </div>
-                    <span id="${dealData.cost}">₺${dealData.cost}</span>
-                </li>
-                `
-                // total += dealData.cost;
-                // cardTotal.innerText = total;
-                filterCards()
-                
-        })
-        
-}
+// total += dealData.cost;
+// cardTotal.innerText = total;
 function addDeal() {
     dialog.showModal()
     let finded;
@@ -109,6 +102,7 @@ function addDeal() {
         `
     })
 }
+
 function closeDialog() {
     dialog.close();
 }
@@ -133,15 +127,10 @@ async function getForm() {
                 'ApiKey': authorizationKey,
             },
         })
-    console.log(response);
-
     renderCards();
     closeDialog();
 }
 
-function filterCards() {
-    cardsData
-}
 
 loadData();
 
