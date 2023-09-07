@@ -35,17 +35,19 @@ async function loadData() {
 let product;
 let cardTotal;
 let total = 0;
+
 function renderCards(){
     bodySection.innerHTML= ""
     cardsData.forEach(cardData=>{
+        // debugger
         bodySection.innerHTML+=`
             <div class="project qualified" id="${cardData.id}">
                 <h3>${cardData.title}</h3>
                 <p class="project-total">₺<span class="total">${total}</span></p>
-                <ul class="product" id="${cardData.id}"></ul>
+                <ul class="product" id="product${cardData.id}"></ul>
                 <button class="project-add">+</button>
-            </div>`
-        product = document.querySelector(`ul[id="${cardData.id}"]`);
+            </div>`;
+        product = document.querySelector('#product'+cardData.id);
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
         cardTotal = document.querySelector(".total");
@@ -63,13 +65,20 @@ function renderCards(){
                         <span id="${dealData.cost}">₺${dealData.cost}</span>
                     </li>
                     `
+                    // debugger
+                    // total += dealData.cost;
+                    // cardTotal.innerText = total;
+                    
+                    // total=0
             }
-                return false;
+                
+                // total += dealData.cost;
+                // cardTotal.innerText = total;
             });
+            
     })
 }
-// total += dealData.cost;
-// cardTotal.innerText = total;
+
 function addDeal() {
     dialog.showModal()
     let finded;
@@ -127,10 +136,13 @@ async function getForm() {
                 'ApiKey': authorizationKey,
             },
         })
-    renderCards();
-    closeDialog();
+    
+    reload();
 }
 
+function reload() {
+    window.location.reload()
+}
 
 loadData();
 
