@@ -34,8 +34,10 @@ async function loadData() {
 };
 let product;
 let cardTotal;
+let deal;
 
 function renderCards(){
+    let draggedItem = null;
     bodySection.innerHTML= ""
     cardsData.forEach(cardData=>{
         // debugger
@@ -44,10 +46,16 @@ function renderCards(){
             <div class="project qualified" id="${cardData.id}">
                 <h3>${cardData.title}</h3>
                 <p class="project-total">₺<span class="total${cardData.id}">${total}</span></p>
-                <ul class="product" id="product${cardData.id}"></ul>
+                <ul class="product droptarget" id="product${cardData.id}"></ul>
                 <button class="project-add">+</button>
             </div>`;
+
+            
+
         product = document.querySelector('#product'+cardData.id);
+
+        
+
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
         cardTotal = document.querySelector(".total"+cardData.id);
@@ -58,7 +66,7 @@ function renderCards(){
             if(dealData.stage=== cardData.id) {
                 let findedPerson =contactsData.find(person => person.id === dealData.contactPersonId)
                 product.innerHTML+= `
-                    <li class="deal" id="${dealData.stage}">
+                    <li class="deal" draggable="true" id="deal${dealData.stage}">
                         <h4><span class="${dealData.title}">${dealData.title}</span></h4>
                         <div class="detail">
                             <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
@@ -66,16 +74,31 @@ function renderCards(){
                         <span id="${dealData.cost}">₺${dealData.cost}</span>
                     </li>
                     `
-                    // debugger;
+                    deal = document.querySelector('#deal'+dealData.stage);
+                    
                     total += dealData.cost;
                     cardTotal.innerText = total
                     
-            }                
-                // total += dealData.cost;
-                // cardTotal.innerText = total;
+            }            
             });
+
+
+            document.querySelectorAll('.deal').forEach(x => x.addEventListener('dragstart', function(){ draggedItem = this; } ))
             
-    })
+    });
+
+    document.querySelectorAll('.product').forEach(x => {
+        x.addEventListener("drop", drop);
+        x.addEventListener("dragover", dragover);
+    });
+
+    function dragover(e) {
+        e.preventDefault();
+    }
+      
+    function drop() {
+        this.appendChild(draggedItem)
+    }
 
 }
 
