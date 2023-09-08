@@ -34,26 +34,27 @@ async function loadData() {
 };
 let product;
 let cardTotal;
-let total = 0;
 
 function renderCards(){
     bodySection.innerHTML= ""
     cardsData.forEach(cardData=>{
         // debugger
+        let total = 0;
         bodySection.innerHTML+=`
             <div class="project qualified" id="${cardData.id}">
                 <h3>${cardData.title}</h3>
-                <p class="project-total">₺<span class="total">${total}</span></p>
+                <p class="project-total">₺<span class="total${cardData.id}">${total}</span></p>
                 <ul class="product" id="product${cardData.id}"></ul>
                 <button class="project-add">+</button>
             </div>`;
         product = document.querySelector('#product'+cardData.id);
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
-        cardTotal = document.querySelector(".total");
+        cardTotal = document.querySelector(".total"+cardData.id);
+        cardTotal.innerText="0"
         projectAddBtns.forEach(projectAddBtn => projectAddBtn.addEventListener('click', addDeal))
         closeBtn.addEventListener('click', closeDialog)
-        dealsData.forEach(dealData=> {
+        dealsData.forEach(dealData=> {   
             if(dealData.stage=== cardData.id) {
                 let findedPerson =contactsData.find(person => person.id === dealData.contactPersonId)
                 product.innerHTML+= `
@@ -65,18 +66,17 @@ function renderCards(){
                         <span id="${dealData.cost}">₺${dealData.cost}</span>
                     </li>
                     `
-                    // debugger
-                    // total += dealData.cost;
-                    // cardTotal.innerText = total;
+                    // debugger;
+                    total += dealData.cost;
+                    cardTotal.innerText = total
                     
-                    // total=0
-            }
-                
+            }                
                 // total += dealData.cost;
                 // cardTotal.innerText = total;
             });
             
     })
+
 }
 
 function addDeal() {
