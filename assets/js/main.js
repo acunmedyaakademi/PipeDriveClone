@@ -144,5 +144,71 @@ function reload() {
     window.location.reload()
 }
 
+const list = document.querySelector(".list");
+const tableList = document.querySelector(".tableList")
+const rotate = document.querySelector(".rotate");
+
+
+list.addEventListener("click", getTable) 
+
+function getTable() {
+    bodySection.innerHTML="";
+    rotate.addEventListener("click", renderCards);
+    // bodySection.style.display="none";
+    // const tableList = document.querySelector(".tableList").style.display = "block"
+
+    const tableTitleColmn = document.querySelector(".tableTitleColmn")
+
+    dealsData.forEach(dealData => {
+        tableTitleColmn.innerHTML += `         
+        
+            <div class="tableTitleColmn">                
+                <div class="table">
+                    <p>${dealData.title}</p>
+                </div>
+            </div>                     
+        
+        `        
+    });
+
+    const tableCostColmn = document.querySelector(".tableCostColmn")
+    dealsData.forEach(dealData => {
+        tableCostColmn.innerHTML += `         
+        <div class="tableCostColmn">
+            <div class="table">
+                <p> ₺ ${dealData.cost}</p>
+            </div>
+        </div> 
+        `        
+    });
+
+  
+
+    const tableCompanyColmn = document.querySelector(".tableCompanyColmn")
+
+    companysData.forEach(companyData => {
+        tableCompanyColmn.innerHTML += `
+        <div class="tableCompanyColmn">
+            <div class="table">
+                <p>${companyData.name}</p>
+            </div>
+        </div>
+        `
+    })
+
+    const tablePersonColmn = document.querySelector(".tablePersonColmn")
+
+    contactsData.forEach(contactData => {
+        tablePersonColmn.innerHTML += `
+            <div class="tablePersonColmn">
+                <div class="table">
+                    <p>${contactData.firstName}</p>
+                </div>
+            </div>
+        `
+    });   
+    
+}
+
 loadData();
 
