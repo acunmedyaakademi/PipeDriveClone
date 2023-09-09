@@ -35,6 +35,10 @@ async function loadData() {
 let product;
 let cardTotal;
 let deal;
+let targetElId;
+let changeAreaId;
+let targetEl;
+let targetElVal;
 
 function renderCards(){
     let draggedItem = null;
@@ -67,7 +71,7 @@ function renderCards(){
             if(dealData.stage=== cardData.id) {
                 let findedPerson =contactsData.find(person => person.id === dealData.contactPersonId)
                 product.innerHTML+= `
-                    <li class="deal" draggable="true" id="deal${dealData.stage}">
+                    <li class="deal" value="${dealData.id}" draggable="true" id="deal${dealData.stage}">
                         <h4><span class="${dealData.title}">${dealData.title}</span></h4>
                         <div class="detail">
                             <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
@@ -91,16 +95,58 @@ function renderCards(){
     document.querySelectorAll('.product').forEach(x => {
         x.addEventListener("drop", drop);
         x.addEventListener("dragover", dragover);
+        x.addEventListener("dragstart", dragstart)
     });
-
+    function dragstart (e){
+        targetElId=e.target.id
+        targetEl=e.target
+        targetElVal=e.target.value
+    }
     function dragover(e) {
         e.preventDefault();
+        
     }
       
     function drop() {
+        changeAreaId=this.id.substr(7)
+        targetEl.removeAttribute("id")
+        targetEl.setAttribute("id","deal"+changeAreaId)
+        targetElId=parseInt(changeAreaId)
+
         this.appendChild(draggedItem)
+
+        dataUpdate()
     }
 
+}
+function dataUpdate(){
+    dealsData.forEach(x=>{
+        if (targetElVal===x.id){
+            renderUpdatedData(x)
+        }
+    })
+
+}
+async function renderUpdatedData (x){
+    const response = await fetch(`https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals?id=eq.${targetElVal}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+                id: targetElVal,
+                contactPersonId: x.contactPersonId,
+                companyId: x.companyId,
+                title: x.title,
+                cost: x.cost,
+                stage: targetElId,
+                expectedCloseDate: x.expectedCloseDate
+              }
+        ),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authorizationKey}`,
+            'ApiKey': authorizationKey,
+        },
+    })
+    reload()
 }
 let finded;
 let findedCompanys;
@@ -223,7 +269,6 @@ function getTable() {
 
   
 
-    const tableCompanyColmn = document.querySelector(".tableCompanyColmn")
 
     companysData.forEach(companyData => {
         tableCompanyColmn.innerHTML += `
@@ -233,6 +278,8 @@ function getTable() {
             </div>
         </div>
         `
+    const tableCompanyColmn = document.querySelector(".tableCompanyColmn")
+
     })
 
     const tablePersonColmn = document.querySelector(".tablePersonColmn")
