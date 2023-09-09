@@ -60,8 +60,6 @@ function renderCards(){
             
 
         product = document.querySelector('#product'+cardData.id); 
-
-
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
         cardTotal = document.querySelector(".total"+cardData.id);
