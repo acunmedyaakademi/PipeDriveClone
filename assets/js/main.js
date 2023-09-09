@@ -39,6 +39,7 @@ let deal;
 function renderCards(){
     let draggedItem = null;
     bodySection.innerHTML= ""
+    tableList.style.display="none"
     cardsData.forEach(cardData=>{
         // debugger
         let total = 0;
@@ -101,11 +102,11 @@ function renderCards(){
     }
 
 }
-
+let finded;
+let findedCompanys;
 function addDeal() {
     dialog.showModal()
-    let finded;
-    let findedCompanys;
+
     formContactPerson.innerHTML=`<option value="" disabled selected>Seçiniz</option>`
     contactsData.forEach(contactData => {
         formContactPerson.innerHTML += `
@@ -117,7 +118,6 @@ function addDeal() {
         finded = contactsData.find(person=> person.id===parseInt(formContactPerson.value))
         findedCompanys=companysData.filter(companyData=> companyData.contactId===parseInt(formContactPerson.value))
         findedCompanys.forEach(find => {
-            
             formCompany.innerHTML+=`<option id="${find.name}" value="${find.id}">${find.name}</option>`
         })
         formPhone.value=finded.phone
@@ -162,9 +162,9 @@ async function getForm() {
     
     reload();
 }
-
 function reload() {
     window.location.reload()
+    
 }
 
 const list = document.querySelector(".list");
@@ -176,12 +176,28 @@ list.addEventListener("click", getTable)
 
 function getTable() {
     bodySection.innerHTML="";
+    tableList.style.display="block"
     rotate.addEventListener("click", renderCards);
     // bodySection.style.display="none";
     // const tableList = document.querySelector(".tableList").style.display = "block"
 
+    tableList.innerHTML=`
+    <div class="tableData">
+        <div class="tableTitleColmn">
+            <h4>Başlık</h4>
+        </div>
+        <div class="tableCostColmn">
+            <h4>Değer</h4>
+        </div>
+        <div class="tableCompanyColmn">
+            <h4>Kuruluş</h4>
+        </div>
+        <div class="tablePersonColmn">
+            <h4>İrtibat Kişisi</h4>
+        </div>
+    </div>
+    `
     const tableTitleColmn = document.querySelector(".tableTitleColmn")
-
     dealsData.forEach(dealData => {
         tableTitleColmn.innerHTML += `         
         
