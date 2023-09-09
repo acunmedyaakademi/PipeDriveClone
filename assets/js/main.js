@@ -77,16 +77,12 @@ function renderCards(){
                         </div>
                         <div class="deal-footer">
                             <span id="${dealData.cost}">₺${dealData.cost}</span>
-                            <span class="deleteBtn">X</span>
+                            <button onclick="removeDeal(this)" class="deleteBtn">X</button>
                         </div>
                     </li>
                     `
                     deal = document.querySelector('#deal'+dealData.stage);
                     const dealFooter = document.querySelector(".deal-footer")
-                    deleteBtns = document.querySelectorAll(".deleteBtn");
-                    deleteBtns.forEach(deleteBtn => {
-                        deleteBtn.addEventListener("click", removeDeal)
-                    });
                     total += dealData.cost;
                     cardTotal.innerText = total
                     
@@ -97,6 +93,8 @@ function renderCards(){
             document.querySelectorAll('.deal').forEach(x => x.addEventListener('dragstart', function(){ draggedItem = this; } ))
             
     });
+
+
 
     document.querySelectorAll('.product').forEach(x => {
         x.addEventListener("drop", drop);
@@ -129,9 +127,9 @@ function renderCards(){
 let removeBtnId;
 
 function removeDeal(e) {
-    removeBtnId = e.target.parentElement.parentElement.value
-    console.log(removeBtnId);
-    e.target.parentElement.parentElement.classList.add("removed-deal")
+    removeBtnId = e.parentElement.parentElement.value
+    console.log("calistim");
+    e.parentElement.parentElement.classList.add("removed-deal")
     dealsData.forEach(dealData => {
         if(removeBtnId === dealData.id){
             deleteDeal(dealData)
