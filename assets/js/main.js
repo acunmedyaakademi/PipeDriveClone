@@ -39,6 +39,7 @@ let targetElId;
 let changeAreaId;
 let targetEl;
 let targetElVal;
+let deleteBtns;
 
 function renderCards(){
     let draggedItem = null;
@@ -57,9 +58,7 @@ function renderCards(){
 
             
 
-        product = document.querySelector('#product'+cardData.id);
-
-        
+        product = document.querySelector('#product'+cardData.id);      
 
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
@@ -76,11 +75,18 @@ function renderCards(){
                         <div class="detail">
                             <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
                         </div>
-                        <span id="${dealData.cost}">₺${dealData.cost}</span>
+                        <div class="deal-footer">
+                            <span id="${dealData.cost}">₺${dealData.cost}</span>
+                            <span class="deleteBtn">X</span>
+                        </div>
                     </li>
                     `
                     deal = document.querySelector('#deal'+dealData.stage);
-                    
+                    const dealFooter = document.querySelector(".deal-footer")
+                    deleteBtns = document.querySelectorAll(".deleteBtn");
+                    deleteBtns.forEach(deleteBtn => {
+                        deleteBtn.addEventListener("click", removeDeal)
+                    });
                     total += dealData.cost;
                     cardTotal.innerText = total
                     
@@ -119,6 +125,43 @@ function renderCards(){
     }
 
 }
+
+let removeBtnId;
+
+function removeDeal(e) {
+    removeBtnId = e.target.parentElement.parentElement.value
+    console.log(removeBtnId);
+    e.target.parentElement.parentElement.classList.add("removed-deal")
+    dealsData.forEach(dealData => {
+        if(removeBtnId === dealData.id){
+            deleteDeal(dealData)
+        }
+    })
+    
+}
+
+async function deleteDeal(dealData) {
+    const response = await fetch(`https://gnxykanwlpxajcvrkych.supabase.co/rest/v1/deals?id=eq.${removeBtnId}`, {
+        method: 'DELETE',
+        body: JSON.stringify({
+                id: dealData.id,
+                contactPersonId: dealData.contactPersonId,
+                companyId: dealData.companyId,
+                title: dealData.title,
+                cost: dealData.cost,
+                stage: dealData.stage,
+                expectedCloseDate: dealData.expectedCloseDate
+              }
+        ),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authorizationKey}`,
+            'ApiKey': authorizationKey,
+        },
+    })
+    reload();
+}
+
 function dataUpdate(){
     dealsData.forEach(x=>{
         if (targetElVal===x.id){

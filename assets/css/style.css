@@ -357,3 +357,12 @@ a {
     width: 350px;
     border-left: none;
 }
+
+.deal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.removed-deal {
+    display: none;
+}
