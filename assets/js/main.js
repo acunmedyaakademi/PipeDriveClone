@@ -10,6 +10,7 @@ const formEmail = document.querySelector("#email");
 const bodySection=document.querySelector(".section");
 const cardStage = document.querySelector("#card-stage");
 const cardProject = document.querySelectorAll('.project');
+const dealsCount = document.querySelector('#deal-count')
 let dealsData=[];
 let cardsData=[];
 let contactsData=[];
@@ -58,7 +59,8 @@ function renderCards(){
 
             
 
-        product = document.querySelector('#product'+cardData.id);      
+        product = document.querySelector('#product'+cardData.id); 
+
 
         const projectAddBtns = document.querySelectorAll('.project-add')
         const closeBtn = document.querySelector('.reset');
@@ -86,8 +88,10 @@ function renderCards(){
                     total += dealData.cost;
                     cardTotal.innerText = total.toLocaleString('en-US')
                     
-            }            
+                }     
+                       
             });
+            dealsCount.innerText=dealsData.length
 
 
             document.querySelectorAll('.deal').forEach(x => x.addEventListener('dragstart', function(){ draggedItem = this; } ))
@@ -105,6 +109,12 @@ function renderCards(){
         targetElId=e.target.id
         targetEl=e.target
         targetElVal=e.target.value
+        const droptargets = document.querySelectorAll('.droptarget')
+        droptargets.forEach(droptarget => {
+            droptarget.style.border="1px solid gray";
+            droptarget.style.borderRadius="10px";
+        })
+        
     }
     function dragover(e) {
         e.preventDefault();
@@ -112,6 +122,7 @@ function renderCards(){
     }
       
     function drop() {
+
         changeAreaId=this.id.substr(7)
         targetEl.removeAttribute("id")
         targetEl.setAttribute("id","deal"+changeAreaId)
