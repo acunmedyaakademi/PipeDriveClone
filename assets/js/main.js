@@ -118,7 +118,6 @@ function renderCards(){
         e.preventDefault();
         
     }
-      
     function drop() {
 
         changeAreaId=this.id.substr(7)
