@@ -92,14 +92,8 @@ function renderCards(){
                        
             });
             dealsCount.innerText=dealsData.length
-
-
             document.querySelectorAll('.deal').forEach(x => x.addEventListener('dragstart', function(){ draggedItem = this; } ))
-            
     });
-
-
-
     document.querySelectorAll('.product').forEach(x => {
         x.addEventListener("drop", drop);
         x.addEventListener("dragover", dragover);
@@ -114,20 +108,15 @@ function renderCards(){
             droptarget.style.border="1px solid gray";
             droptarget.style.borderRadius="10px";
         })
-        
     }
     function dragover(e) {
         e.preventDefault();
-        
     }
-      
     function drop() {
-
         changeAreaId=this.id.substr(7)
         targetEl.removeAttribute("id")
         targetEl.setAttribute("id","deal"+changeAreaId)
         targetElId=parseInt(changeAreaId)
-
         this.appendChild(draggedItem)
 
         dataUpdate()
