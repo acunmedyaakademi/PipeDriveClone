@@ -23,6 +23,12 @@ input, button, textarea, select {
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
+.rotate, .list, .filter-buton, .searchInput, .right-nav{
+    display: none;
+}
+.green-buton{
+    display: block;
+}
 .product li{
     margin-bottom: 8px;
 }
@@ -179,13 +185,12 @@ display: flex;
     font-family: Arial, Helvetica, sans-serif;
 }
 .searchIcon {
+display: none;
 position: absolute;
 top: 18px;
 padding-left: 10px;
 }
-.right-nav {
-    display: flex;
-}
+
 .right-nav .right-nav-list{
     list-style: none;
     display: flex;

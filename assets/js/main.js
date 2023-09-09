@@ -76,7 +76,7 @@ function renderCards(){
                             <span class="${dealData.companyId}">${dealData.title}</span>,<span id="contact ${dealData.contactPersonId}"> ${findedPerson.firstName} ${findedPerson.lastName} </span>
                         </div>
                         <div class="deal-footer">
-                            <span id="${dealData.cost}">₺${dealData.cost}</span>
+                            <span id="${dealData.cost}">₺${dealData.cost.toLocaleString('en-US')}</span>
                             <button onclick="removeDeal(this)" class="deleteBtn">X</button>
                         </div>
                     </li>
@@ -84,7 +84,7 @@ function renderCards(){
                     deal = document.querySelector('#deal'+dealData.stage);
                     const dealFooter = document.querySelector(".deal-footer")
                     total += dealData.cost;
-                    cardTotal.innerText = total
+                    cardTotal.innerText = total.toLocaleString('en-US')
                     
             }            
             });
